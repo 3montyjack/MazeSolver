@@ -1,0 +1,6 @@
+*.cfg
+/build/*
+cc1plus.exe.core
+MazeSolver.exe
+MazeSolver.exe.core
+temp.cpp
