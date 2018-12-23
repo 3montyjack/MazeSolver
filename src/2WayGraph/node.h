@@ -6,7 +6,6 @@
 class Node {
 private:
 bool end;
-Node * thisLoca;
 Edge * connections[4];
 int connectionNum;
 
@@ -20,32 +19,28 @@ Node(int x, int y);
 
 ~Node();
 
-bool setLocation(Node * value)
-{
-    thisLoca = value;
-    for (int i = 0; i < 4; i++)
-    {
-        bool flag = connections[i]->setEdge(thisLoca);
-        if (!flag) {
-           return false;
-        }
-    }
-    return true;
-}
 int getNumConnections()
 {
     return connectionNum;
 }
 Node * getConnectedNode(int index)
 {
-    return connections[index]->getOtherEnd(thisLoca);
+    return connections[index]->getOtherEnd(this);
+}
+bool getConnectedNode(Node * nodePtr)
+{
+  for (int i = 0; i < connectionNum; i++) {
+    if (connections[i]->getOtherEnd(this) == nodePtr)
+      return true;
+  }
+  return false;
 }
 bool addConnection(Node * newNode)
 {
     if (connectionNum < 4)
     {
         bool success = connections[connectionNum]->setEdge(newNode);
-        newNode->addConnection(thisLoca, false);
+        newNode->addConnection(this, false);
         connectionNum++;
         return success;
     }
@@ -61,19 +56,47 @@ bool addConnection(Node * newNode, bool input)
     }
     return false;
 }
-// This has to be completelty fucked
-bool addEdges(Node ** edges)
+
+void printNode(std::ostream& stream)
 {
-    for (int i = 0; i < 4; i++)
+    if (!searched)
     {
-        cout << "Connection: " << edges[i] << endl;
-        if (edges[i] != 0)
+        searched = true;
+        stream << *this << "\n";
+        for (int i = 0; i < 4; i++)
         {
-            addConnection(edges[i]);
+            if (connections[i]->getConnected())
+            {
+                Node * temp = connections[i]->getOtherEnd(this);
+                temp->printNode(stream);
+            }
         }
     }
 }
 
+friend std::ostream& operator<<(std::ostream& stream, Node& node)
+{
+  // return stream << &node;
+    bool first = true;
+    stream << node.x << "," << node.y << " : ";
+    for (int i = 0; i < 4; i++)
+    {
+        if (node.connections[i]->getConnected())
+        {
+            Node * temp = node.connections[i]->getOtherEnd(&node);
+            if (!first)
+            {
+                stream << " | " << temp->x << "," << temp->y;
+            }
+            else
+            {
+                stream << " " << temp->x << "," << temp->y;
+                first = false;
+            }
+        }
+    }
+    return stream;
+}
 
 };
 #endif

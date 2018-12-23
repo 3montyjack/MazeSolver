@@ -11,16 +11,15 @@ bool inited;
 bool holding;
 Node * connections[2];
 public:
-Edge()
+Edge(Node* FirstConnection)
 {
-    inited = false;
     holding = false;
-    connections[0] = 0;
+    connections[0] = FirstConnection;
     connections[1] = 0;
 }
 ~Edge()
 {
-
+  // delete Edge;
 }
 void deleteMe(Node * Caller)
 {
@@ -32,25 +31,23 @@ void deleteMe(Node * Caller)
 
 setEdge(Node * &location)
 {
+  bool flag = false;
     if (!inited)
     {
         connections[0] = location;
         inited = true;
-        return true;
+        flag = true;
     }
     else if (!holding)
     {
         cout << "Setting EdgeConnection: " << location << " " << connections[0] << endl;
         connections[1] = location;
         holding = true;
-        return true;
+        flag =  true;
     }
-    else
-    {
-        return false;
-    }
+    return flag;
 }
-Node * getOtherEnd(Node *& oneSide)
+Node * getOtherEnd(Node * oneSide)
 {
     if (connections[0] == oneSide)
     {
@@ -67,5 +64,11 @@ bool getValidEdge()
 {
     return inited;
 }
+bool getConnected()
+{
+  return holding;
+}
 };
+
+
 #endif

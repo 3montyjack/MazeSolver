@@ -7,9 +7,9 @@ Node::Node(int x, int y) {
         this->x = x;
         this->y = y;
         for (int i = 0; i < 4; i++) {
-                connections[i] = new Edge();
+                connections[i] = new Edge(this);
         }
-        cout << "New Node: " << this->x << "," << this->y << endl;
+        // cout << "New Node: " << this->x << "," << this->y << endl;
 };
 
 Node::Node() {
