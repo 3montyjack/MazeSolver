@@ -1,7 +1,9 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+# Ignore Files Built for C++
+*.exe
 *.cfg
-/build/*
-cc1plus.exe.core
-MazeSolver.exe
-MazeSolver.exe.core
-temp.cpp
-/src/headlessEdges.*

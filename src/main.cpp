@@ -1,8 +1,7 @@
 #include <iostream>
 #include <string>
-#include "2WayGraph/maze.h"
 #include "2WayGraph/graph.h"
-#include "getData.h"
+#include "Maze/maze.h"
 #define NUM_CONNECTIONS = 4;
 
 using namespace std;
@@ -10,15 +9,26 @@ using namespace std;
 int main()
 {
     Maze * m = new Maze("Hello");
-    Graph * g = new Graph(1, 2);
-
+    Graph * g = new Graph(1, 0);
+    g->addNode(1, 0, 1, 1);
+    g->addNode(1, 1, 2, 1);
+    cout << *g;
     cout << m->makeMap() << endl;
-    Graph * edges = new Graph(2, 1);
-    edges->addNode(2, 1, 3, 1);
+    Graph * edges = new Graph(2, 3);
 
-    cout << "Adding nodes Graph 2: " << g->connectGraphs(1, 2, edges, 2, 1) << endl;
+    edges->addNode(2, 3, 4, 3);
+    edges->addNode(4, 3, 4, 4);
+
+    cout << *edges;
+
+    cout << "Adding nodes Graph 2: " << g->connectGraphs(2, 1, edges, 4, 3) << endl;
     cout << "Connected Graph: " << *g << endl;
-    cout << "Finding Node (2,1): " << g->findNode(2, 1) << endl;
+    cout << "Finding Node: " << *(g->findNode(2, 1)) << endl;
+
+    g->addConnection(1,1,2,3);
+    g->addConnection(2,1,2,3);
+
+    cout << *g;
 
     return 0;
 }

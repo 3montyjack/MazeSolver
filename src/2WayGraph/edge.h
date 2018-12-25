@@ -6,69 +6,66 @@
 class Node;
 
 class Edge {
-int weight;
-bool inited;
-bool holding;
-Node * connections[2];
+    int weight;
+    bool inited;
+    bool holding;
+    Node * connections[2];
 public:
-Edge(Node* FirstConnection)
-{
-    holding = false;
-    connections[0] = FirstConnection;
-    connections[1] = 0;
-}
-~Edge()
-{
-  // delete Edge;
-}
-void deleteMe(Node * Caller)
-{
-    if (connections[0] == Caller)
+    Edge(Node * FirstConnection)
     {
-        // delete connections[1];
+        holding        = false;
+        connections[0] = FirstConnection;
+        connections[1] = 0;
     }
-}
 
-setEdge(Node * &location)
-{
-  bool flag = false;
-    if (!inited)
+    ~Edge()
     {
-        connections[0] = location;
-        inited = true;
-        flag = true;
+        // delete Edge;
     }
-    else if (!holding)
-    {
-        cout << "Setting EdgeConnection: " << location << " " << connections[0] << endl;
-        connections[1] = location;
-        holding = true;
-        flag =  true;
-    }
-    return flag;
-}
-Node * getOtherEnd(Node * oneSide)
-{
-    if (connections[0] == oneSide)
-    {
-        return connections[1];
-    }
-    else if (connections[1] == oneSide)
-    {
-        return connections[0];
-    }
-    return (Node *) -1;
-}
 
-bool getValidEdge()
-{
-    return inited;
-}
-bool getConnected()
-{
-  return holding;
-}
+    void deleteMe(Node * Caller)
+    {
+        if (connections[0] == Caller) {
+            // delete connections[1];
+        }
+    }
+
+    setEdge(Node * &location)
+    {
+        bool flag = false;
+
+        if (!inited) {
+            connections[0] = location;
+            inited         = true;
+            flag = true;
+        } else if (!holding)   {
+            cout << "Setting EdgeConnection: " << location << " " << connections[0] << endl;
+            connections[1] = location;
+            holding        = true;
+            flag = true;
+        }
+        return flag;
+    }
+    Node * getOtherEnd(Node * oneSide)
+    {
+        if (connections[0] == oneSide) {
+            return connections[1];
+        } else if (connections[1] == oneSide)   {
+            return connections[0];
+        }
+        return (Node *) -1;
+    }
+
+    bool getValidEdge()
+    {
+        return inited;
+    }
+
+    bool getConnected()
+    {
+        return holding;
+    }
 };
 
 
-#endif
+#endif // ifndef EDGE_H
