@@ -13,8 +13,7 @@ public class ReadImage {
   File folder;
   File[] files;
 
-  ReadImage(String fileLocation, String saveDir)
-  {
+  ReadImage(String fileLocation, String saveDir) {
     folder = new File(fileLocation);
     if (folder.isDirectory()) {
       files = folder.listFiles();
@@ -24,8 +23,7 @@ public class ReadImage {
     ParseFiles(saveDir);
   }
 
-  private void ParseFiles(String saveDir)
-  {
+  private void ParseFiles(String saveDir) {
     try {
       for (File photo : files) {
         BufferedImage picture = ImageIO.read(photo);
@@ -38,8 +36,7 @@ public class ReadImage {
     }
   }
 
-  private void parseImage(BufferedImage image, String name, String saveDir) throws IOException
-  {
+  private void parseImage(BufferedImage image, String name, String saveDir) throws IOException {
     char[][] tempImg = new char[image.getWidth()][image.getHeight()];
 
     File Image = new File(saveDir, name.replace(".png", ".txt"));
@@ -55,12 +52,12 @@ public class ReadImage {
               tempImg[i][j] = "1".charAt(0);
               break;
             case "ff000000":
-            tempImg[i][j] = "0".charAt(0);
+              tempImg[i][j] = "0".charAt(0);
               break;
-              case "ff47f441":
+            case "ff47f441":
               tempImg[i][j] = "S".charAt(0);
               break;
-              case "fff44242":
+            case "fff44242":
               tempImg[i][j] = "E".charAt(0);
               break;
 

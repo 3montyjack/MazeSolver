@@ -6,65 +6,37 @@
 class Node;
 
 class Edge {
-    int weight;
-    bool inited;
-    bool holding;
-    Node * connections[2];
+  int weight;
+  bool inited;
+  bool holding;
+  Node * connections[2];
 public:
-    Edge(Node * FirstConnection)
-    {
-        holding        = false;
-        connections[0] = FirstConnection;
-        connections[1] = 0;
-    }
+  Edge(Node * FirstConnection);
 
-    ~Edge()
-    {
-        // delete Edge;
-    }
+  ~Edge();
 
-    void deleteMe(Node * Caller)
-    {
-        if (connections[0] == Caller) {
-            // delete connections[1];
-        }
-    }
+  void deleteMe(Node * Caller);
 
-    setEdge(Node * &location)
-    {
-        bool flag = false;
+  setEdge(Node * &location);
 
-        if (!inited) {
-            connections[0] = location;
-            inited         = true;
-            flag = true;
-        } else if (!holding)   {
-            cout << "Setting EdgeConnection: " << location << " " << connections[0] << endl;
-            connections[1] = location;
-            holding        = true;
-            flag = true;
-        }
-        return flag;
-    }
-    Node * getOtherEnd(Node * oneSide)
-    {
-        if (connections[0] == oneSide) {
-            return connections[1];
-        } else if (connections[1] == oneSide)   {
-            return connections[0];
-        }
-        return (Node *) -1;
-    }
+  Node * getOtherEnd(Node * oneSide);
 
-    bool getValidEdge()
-    {
-        return inited;
-    }
+  bool getValidEdge();
 
-    bool getConnected()
-    {
-        return holding;
+  bool getConnected();
+
+  friend std::ostream&operator << (std::ostream& stream, Edge& edge){
+    if (edge.connections[0] != 0) {
+      if (edge.connections[1] == 0) {
+        stream << "1 Connection";
+      } else {
+        stream << "2 Connections, Weight: " << edge.weight;
+      }
+    } else {
+      stream << "Edge is empty";
     }
+    return stream;
+  }
 };
 
 
