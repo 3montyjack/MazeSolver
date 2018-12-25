@@ -1,3 +1,3 @@
 .\compile.ps1
-echo "Running C++ Project: "
+Write-Output "Running C++ Project: "
 ../.\MazeSolver.exe

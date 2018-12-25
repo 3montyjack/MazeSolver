@@ -1,6 +1,6 @@
 .\compileJava.ps1
 .\compile.ps1
-echo "Running Java Project: "
+Write-Output "Running Java Project: "
 .\runJava.ps1
-echo "Running C++ Project: "
+Write-Output "Running C++ Project: "
 ../.\MazeSolver.exe

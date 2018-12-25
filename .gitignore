@@ -5,5 +5,7 @@
 build
 
 # Ignore Files Built for C++
+parsedImages
+target
 *.exe
 *.cfg

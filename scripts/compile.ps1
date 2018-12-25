@@ -1,10 +1,10 @@
-cd ..
-g++ -c -o ./build/maze.o .\src\Maze\maze.cpp
-g++ -c -o ./build/graph.o .\src\2WayGraph\graph.cpp
-g++ -c -o ./build/edge.o .\src\2WayGraph\edge.cpp
-g++ -c -o ./build/node.o .\src\2WayGraph\node.cpp
-g++ -c -o ./build/main.o .\src\main.cpp
-g++ -c -o ./build/dataRead.o .\src\Maze\dataRead.cpp
+Set-Location ..
+g++ -c -o ./build/cpp/maze.o .\src\Maze\maze.cpp
+g++ -c -o ./build/cpp/graph.o .\src\2WayGraph\graph.cpp
+g++ -c -o ./build/cpp/edge.o .\src\2WayGraph\edge.cpp
+g++ -c -o ./build/cpp/node.o .\src\2WayGraph\node.cpp
+g++ -c -o ./build/cpp/main.o .\src\main.cpp
+g++ -c -o ./build/cpp/dataRead.o .\src\Maze\dataRead.cpp
 
-g++ -o MazeSolver.exe .\build\main.o .\build\maze.o .\build\graph.o .\build\edge.o .\build\node.o .\build\dataRead.o
-cd scripts
+g++ -o MazeSolver.exe .\build\cpp\main.o .\build\cpp\maze.o .\build\cpp\graph.o .\build\cpp\edge.o .\build\cpp\node.o .\build\cpp\dataRead.o
+Set-Location scripts
