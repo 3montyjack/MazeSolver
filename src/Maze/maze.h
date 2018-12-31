@@ -5,7 +5,7 @@
 #include "./../2WayGraph/graph.h"
 
 using namespace std;
-
+// This still needs to be moves to the .cpp file
 class Maze {
 private:
   string f_location;

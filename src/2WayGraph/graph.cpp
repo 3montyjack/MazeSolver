@@ -36,6 +36,9 @@ bool Graph::connectGraphs(int thisX, int thisY, Graph * graphToConnect, int newX
   if (newGraphAddr != 0 && foundMatching != 0) {
     flag = foundMatching->addConnection(newGraphAddr, weight);
     // cout << "Flag Status: " << flag << endl;
+    if (graphToConnect->getSolvable()) {
+      setSolvable();
+    }
     graphToConnect->removeStart();
     delete graphToConnect;
   }
@@ -99,7 +102,9 @@ bool Graph::addNode(int oldX, int oldY, int newX, int newY, int weight, bool end
   Node * foundOldNode = findNode(oldX, oldY);
   if (foundOldNode != 0) {
     bool addedConnection = foundOldNode->addConnection(new Node(newX, newY, end), weight);
-
+    if (addedConnection && end) {
+      setSolvable();
+    }
     // cout << newX << "," << newY << " " << foundOldNode << " " << addedConnection << endl;
     return addedConnection;
   }
