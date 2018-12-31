@@ -1,23 +1,40 @@
 #include "graph.h"
 
 Graph::Graph(int x, int y) {
-  start = new Node(x, y);
+  start		= new Node(x, y);
+  only1Node = true;
+  solvable	= false;
   // cout << "Location Main: " << start << endl;
 };
 
-Graph::removeStart()
-{
+Graph::Graph() {
+  start		= 0;
+  only1Node = true;
+  solvable	= false;
+  // start = new Node(x, y);
+  // cout << "Location Main: " << start << endl;
+};
+
+void Graph::removeStart() {
   start = 0;
 };
 
-bool Graph::connectGraphs(int thisX, int thisY, Graph * graphToConnect, int newX, int newY) {
+bool Graph::onlyOneNode() {
+  return only1Node;
+};
+
+void Graph::setSolvable() {
+  solvable = true;
+}
+
+bool Graph::connectGraphs(int thisX, int thisY, Graph * graphToConnect, int newX, int newY, int weight) {
   bool flag = false;
   Node * foundMatching = findNode(thisX, thisY);
   Node * newGraphAddr  = graphToConnect->findNode(newX, newY);
 
   // cout << "Found coord: " << newGraphAddr << endl;
   if (newGraphAddr != 0 && foundMatching != 0) {
-    flag = foundMatching->addConnection(newGraphAddr);
+    flag = foundMatching->addConnection(newGraphAddr, weight);
     // cout << "Flag Status: " << flag << endl;
     graphToConnect->removeStart();
     delete graphToConnect;
@@ -46,6 +63,7 @@ Node * Graph::findNode(int x, int y, Node * temp) {
   }
   temp->searched = true;
   for (int i = 0; i < temp->getNumConnections(); i++) {
+    // std::cout << temp << std::endl;
     if (!temp->getConnectedNode(i)->searched) {
       // cout << "Connected Node Ptr: " << temp->getConnectedNode(i) << endl;
       // Bug here
@@ -60,32 +78,64 @@ Node * Graph::findNode(int x, int y, Node * temp) {
   return 0;
 };
 
-bool Graph::addNode(int oldX, int oldY, int newX, int newY) {
+bool Graph::addNode(int newX, int newY) {
+  if (start == 0) {
+    start = new Node(newX, newY);
+    return true;
+  }
+  return false;
+};
+
+bool Graph::addNode(int oldX, int oldY, int newX, int newY, int weight) {
+  return addNode(oldX, oldY, newX, newY, weight, false);
+};
+
+bool Graph::addNode(int oldX, int oldY, int newX, int newY, int weight, bool end) {
+  if ((oldX == newX) && (oldY == newY)) {
+    cout << "Same Node: " << oldX << " " << oldY << endl;
+    // Make this false if removing the comment for debugging
+    return true;
+  }
   Node * foundOldNode = findNode(oldX, oldY);
-
   if (foundOldNode != 0) {
-    return foundOldNode->addConnection(new Node(newX, newY));
+    bool addedConnection = foundOldNode->addConnection(new Node(newX, newY, end), weight);
+
+    // cout << newX << "," << newY << " " << foundOldNode << " " << addedConnection << endl;
+    return addedConnection;
   }
-  return 0;
+  // cout << "Couldnt add: " << oldX << "," << oldY << " " << newX << "," << newY << endl;
+  return false;
 };
 
-bool Graph::addConnection(int oldX, int oldY, int newX, int newY) {
-  Node * foundOldNode	 = findNode(oldX, oldY);
-  Node * foundSecondNode = findNode(newX, newY);
+bool Graph::addConnection(int oldX, int oldY, int newX, int newY, int weight) {
+  if (!(oldX == newX && oldY == newY)) {
+    Node * foundOldNode	   = findNode(oldX, oldY);
+    Node * foundSecondNode = findNode(newX, newY);
 
-  if (foundOldNode != 0 && foundSecondNode != 0) {
-    return foundOldNode->addConnection(foundSecondNode);
+    if (foundOldNode != 0 && foundSecondNode != 0) {
+      if (foundOldNode->getConnectedNode(foundSecondNode)) {
+        cout << "Edge allready Exists: " << oldX << "," << oldY << " " << newX << "," << newY << endl;
+        // Make this return false if needed for making this fail
+        return true;
+      }
+      return foundOldNode->addConnection(foundSecondNode, weight);
+    } else {
+      cout << "One of the nodes doesnt exist" << endl;
+    }
+    cout << "Neither of the nodes found" << endl;
   }
-  return 0;
+  cout << "Same Node" << endl;
+  return false;
 };
 
-Graph::resetFlags(Node * resetVal)
-{
+void Graph::resetFlags(Node * resetVal) {
   // cout << "Resetting: " << resetVal->x << "," << resetVal->y << endl;
   resetVal->searched = false;
+  // std::cout << "Here 808";
   for (int i = 0; i < resetVal->getNumConnections(); i++) {
     Node * temp = resetVal->getConnectedNode(i);
     if (temp != 0 && temp->searched) {
+      // std::cout << "Helllllooooo";
       resetFlags(temp);
     }
   }

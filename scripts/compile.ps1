@@ -6,5 +6,10 @@ g++ -c -o ./build/cpp/node.o .\src\2WayGraph\node.cpp
 g++ -c -o ./build/cpp/main.o .\src\main.cpp
 g++ -c -o ./build/cpp/dataRead.o .\src\Maze\dataRead.cpp
 
-g++ -o MazeSolver.exe .\build\cpp\main.o .\build\cpp\maze.o .\build\cpp\graph.o .\build\cpp\edge.o .\build\cpp\node.o .\build\cpp\dataRead.o
+# gdb ./build/cpp/main.o
+
+g++ -o MazeSolver.exe .\build\cpp\main.o .\build\cpp\maze.o .\build\cpp\graph.o .\build\cpp\edge.o .\build\cpp\node.o .\build\cpp\dataRead.o 
+
+# gdb MazeSolver.exe
+
 Set-Location scripts

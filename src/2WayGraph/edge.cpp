@@ -4,6 +4,8 @@ class Node;
 
 Edge::Edge(Node * FirstConnection) {
   holding		 = false;
+  inited		 = true;
+  weight		 = 0;
   connections[0] = FirstConnection;
   connections[1] = 0;
 };
@@ -18,16 +20,16 @@ void Edge::deleteMe(Node * Caller) {
   }
 }
 
-Edge::setEdge(Node * &location)
-{
+bool Edge::setEdge(Node * &location, int weightT) {
   bool flag = false;
 
   if (!inited) {
     connections[0] = location;
     inited		   = true;
     flag = true;
-  } else if (!holding) {
+  } else if (!holding)   {
     // cout << "Setting EdgeConnection: " << location << " " << connections[0] << endl;
+    weight		   = weightT;
     connections[1] = location;
     holding		   = true;
     flag = true;
@@ -38,7 +40,7 @@ Edge::setEdge(Node * &location)
 Node * Edge::getOtherEnd(Node * oneSide) {
   if (connections[0] == oneSide) {
     return connections[1];
-  } else if (connections[1] == oneSide) {
+  } else if (connections[1] == oneSide)   {
     return connections[0];
   }
   return (Node *) -1;

@@ -26,8 +26,8 @@ public class ReadImage {
   private void ParseFiles(String saveDir) {
     try {
       for (File photo : files) {
-        BufferedImage picture = ImageIO.read(photo);
         System.out.println("Parsing File: " + photo.getName());
+        BufferedImage picture = ImageIO.read(photo);
         parseImage(picture, photo.getName(), saveDir);
       }
     } catch (IOException e) {
@@ -45,7 +45,7 @@ public class ReadImage {
       for (int j = 0; j < image.getWidth(); j++) {
         int p = image.getRGB(j, i);
 
-        System.out.println("Hex: " + Integer.toHexString(p));
+        // System.out.println("Hex: " + Integer.toHexString(p));
 
         switch (Integer.toHexString(p)) {
             case "ffffffff":
@@ -64,17 +64,6 @@ public class ReadImage {
             default:
               tempImg[i][j] = "5".charAt(0);
         }
-
-        // if (Integer.toHexString(p) == "ffffffff") {
-        //   System.out.println("Ahhh");
-        // } else if (p == Integer.parseInt("F44242", 16)) {
-        //   tempImg[i][j] = "S".charAt(0);
-        // } else if (p == Integer.parseInt("47f441", 16)) {
-        //   tempImg[i][j] = "E".charAt(0);
-        //   System.out.println(Integer.toHexString(p));
-        // } else if (Integer.toHexString(p) == "ff000000") {
-        //   // System.out.println(Integer.toHexString(p));
-        // } else { }
       }
       writer.write(tempImg[i], 0, image.getWidth());
       writer.newLine();

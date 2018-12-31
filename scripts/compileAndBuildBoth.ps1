@@ -3,4 +3,6 @@
 Write-Output "Running Java Project: "
 .\runJava.ps1
 Write-Output "Running C++ Project: "
-../.\MazeSolver.exe
+Set-Location ..
+.\MazeSolver.exe
+Set-Location .\scripts

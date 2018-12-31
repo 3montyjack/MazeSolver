@@ -8,4 +8,5 @@ build
 parsedImages
 target
 *.exe
+*.exe.core
 *.cfg

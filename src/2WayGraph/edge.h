@@ -17,22 +17,24 @@ public:
 
   void deleteMe(Node * Caller);
 
-  setEdge(Node * &location);
+  bool setEdge(Node * &location, int weight);
 
   Node * getOtherEnd(Node * oneSide);
 
   bool getValidEdge();
 
+  int getWeight() { return weight; }
+
   bool getConnected();
 
-  friend std::ostream&operator << (std::ostream& stream, Edge& edge){
+  friend std::ostream&operator << (std::ostream& stream, Edge& edge) {
     if (edge.connections[0] != 0) {
       if (edge.connections[1] == 0) {
         stream << "1 Connection";
-      } else {
+      } else   {
         stream << "2 Connections, Weight: " << edge.weight;
       }
-    } else {
+    } else   {
       stream << "Edge is empty";
     }
     return stream;

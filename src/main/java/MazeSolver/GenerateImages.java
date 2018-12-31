@@ -19,20 +19,12 @@ class GenerateImagaes {
 
   public void generateImage(File folder, int complexity) {
     int size = complexity * 10;
-
-    BufferedImage bufferedImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
+    // Allow for a black box to be generated, adding one to the border size
+    BufferedImage bufferedImage = new BufferedImage(size + 2, size + 2, BufferedImage.TYPE_INT_RGB);
 
 
     bufferedImage = generateStartStop(bufferedImage, size);
     bufferedImage = generateMaze(bufferedImage, size);
-    boolean[][] imagePart = new boolean[size][size];
-
-    for (int i = 0; i < size; i++) {
-      imagePart[i]       [0] = false;
-      imagePart[0]       [i] = false;
-      imagePart[size - 1][i] = false;
-      imagePart[i][size - 1] = false;
-    }
 
 
     int nameTemp  = (int) (Math.random() * 10);
@@ -45,20 +37,20 @@ class GenerateImagaes {
     System.out.println("Made File: " + fileName);
   }
 
+  // Adding one to the x,y to deal with the new black box surrounding the maze
   BufferedImage generateStartStop(BufferedImage image, int size) {
-    image.setRGB((int) (Math.random() * (size - 2)) + 1, 0, Integer.parseInt("F44242", 16));
-
-    image.setRGB((int) (Math.random() * (size - 2)) + 1, size - 1, Integer.parseInt("47f441", 16));
-
+    image.setRGB((int) (Math.random() * (size - 2)) + 2, 0, Integer.parseInt("F44242", 16));
+    image.setRGB((int) (Math.random() * (size - 2)) + 2, size - 1, Integer.parseInt("47f441", 16));
 
     return image;
   }
 
+  // Adding one to the x,y to deal with the new black box surrounding the maze
   BufferedImage generateMaze(BufferedImage image, int size) {
     // The PP Principal of some sort even though I am thinking of it wrong
     for (int i = 0; i < ((((size - 1) * (size - 1)) / 2) + size * 2); i++) {
-      int x = ((int) (Math.random() * (size - 2)) + 1);
-      int y = ((int) (Math.random() * (size - 2)) + 1);
+      int x = ((int) (Math.random() * (size - 2)) + 1) + 1;
+      int y = ((int) (Math.random() * (size - 2)) + 1) + 1;
       if (image.getRGB(x, y) != Integer.parseInt("ffffff", 16)) {
         image.setRGB(x, y, Integer.parseInt("ffffff", 16));
       } else {
