@@ -128,7 +128,6 @@ bool DataRead::findNode(Graph * g, vector<vector<char> > * maze, int newX, int n
     g->addNode(oldX, oldY, newX, newY, distance, (*maze)[newX][newY] == 'E');
     if (end && !solvable) {
       solvable = true;
-      g->setSolvable();
     }
   }
 
